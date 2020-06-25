@@ -1,0 +1,72 @@
+<div>
+  <h1>Administración de Usuarios</h1>
+  <table border="1">
+    <tr>
+      <td></td>
+      <td>User ID</td>
+      <td>User Name</td>
+      <td>User Password</td>
+      <td>User Real Name</td>
+      <td>User Last Name</td>
+      <td>User Birthday</td>
+      <td></td>
+    </tr>
+    <tr *ngFor="let user of lista">
+      <!--<td><img height="24" src="{{user.user_profile_picture_url}}" (click)="editProfilePicture(user.user_id)"></td>-->
+       <td>{{user.user_id}}</td>
+      <td>{{user.user_name}}</td>
+      <td>{{user.user_password}}</td>
+      <td>{{user.user_real_name}}</td>
+      <td>{{user.user_last_name}}</td>
+      <td>{{user.user_birthday}}</td>
+      <td><button (click)="delete(user.user_id)">Eliminar</button></td>
+    </tr>
+  </table>
+  <div *ngIf="state == 1">
+    <h1>Nuevo Usuario</h1>
+    <p>
+      Usuario: <input type="text" [(ngModel)]="user.user_name">
+    </p>
+    <p>
+      Contraseña: <input type="password" [(ngModel)]="user.user_password">
+    </p>
+    <p>
+      Nombres: <input type="text" [(ngModel)]="user.user_real_name">
+    </p>
+    <p>
+      Apellidos: <input type="text" [(ngModel)]="user.user_last_name">
+    </p>
+    <!--<p>
+      URL de foto de perfil: <input type="text"  placeholder="target_path" [(ngModel)]="user.user_profile_picture_url">
+    </p>
+    <p>
+      Nombre de la Foto: <input type="text" placeholder="file" [(ngModel)]="user.user_profile_picture_url">
+    </p>-->
+    <p>
+      Fecha de Nacimiento: <input type="date" [(ngModel)]="user.user_birthday">
+    </p>
+    <div class="custom-file">
+      <form action="/api/upload" method="post" enctype="multipart/form-data">
+        <input (change)="fileChange($event)"
+               type="file" class="custom-file-input" id="inputGroupFile01"
+               aria-describedby="inputGroupFileAddon01">
+      </form>
+    </div>
+    <br>
+    <button (click)="new()" class="input-group-text upload" (click)="upload()" id="btnUpload" >Registrar Usuario</button>
+  </div>
+  <br>
+  <br>
+  <div class="input-group">
+    <div class="input-group-prepend">
+    </div>
+  </div>
+  <div *ngIf="state == 2">
+    <h1>Editar Foto de Perfil ({{user.user_id}})</h1>
+    <!--<p>
+      URL de foto de perfil: <input type="text" [(ngModel)]="user.user_profile_picture_url">
+    </p>-->
+    <button (click)="createState()">Regresar</button>
+    <button (click)="update()">Confirmar</button>
+  </div>
+</div>
